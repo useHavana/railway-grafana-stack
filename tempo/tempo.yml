@@ -27,7 +27,10 @@ metrics_generator:
     path: /var/tempo/generator/traces
   processor:
     local_blocks:
-      flush_to_storage: true
+      flush_to_storage: false
+      max_live_traces: 50000
+      max_block_duration: 5m
+      complete_block_timeout: 30m
 
 overrides:
   defaults:
@@ -38,8 +41,6 @@ overrides:
         - local-blocks
 
 distributor:
-  log_received_spans:
-        enabled: true
   receivers:
     otlp:
       protocols:
