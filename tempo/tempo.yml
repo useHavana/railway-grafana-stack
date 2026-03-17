@@ -23,6 +23,11 @@ metrics_generator:
     remote_write:
       - url: http://prometheus.railway.internal:9090/api/v1/write
         send_exemplars: true
+  traces_storage:
+    path: /var/tempo/generator/traces
+  processor:
+    local_blocks:
+      flush_to_storage: true
 
 overrides:
   defaults:
@@ -30,6 +35,7 @@ overrides:
       processors:
         - service-graphs
         - span-metrics
+        - local-blocks
 
 distributor:
   log_received_spans:
