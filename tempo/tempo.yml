@@ -29,7 +29,6 @@ overrides:
       processors:
         - service-graphs
         - span-metrics
-        - local-blocks
 
 distributor:
   log_received_spans:
