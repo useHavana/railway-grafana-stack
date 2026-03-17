@@ -18,6 +18,11 @@ metrics_generator:
   registry:
     external_labels:
       source: tempo
+  processor:
+    local_blocks:
+      flush_to_storage: false
+      max_block_duration: 5m
+      complete_block_timeout: 1h
   storage:
     path: /var/tempo/generator/wal
     remote_write:
