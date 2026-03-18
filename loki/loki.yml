@@ -22,6 +22,16 @@ schema_config:
     object_store: filesystem
     schema: v13
 
+compactor:
+  working_directory: /loki/compactor
+  compaction_interval: 10m
+  retention_enabled: true
+  retention_delete_delay: 2h
+  retention_delete_worker_count: 150
+
+limits_config:
+  retention_period: 720h
+
 storage_config:
   tsdb_shipper:
     active_index_directory: /loki/tsdb-index
