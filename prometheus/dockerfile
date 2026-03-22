@@ -2,8 +2,8 @@ ARG VERSION=v3.2.1
 
 FROM prom/prometheus:${VERSION}
 
-# Copy config to both custom and default paths (Railway may override CMD)
-COPY prom.yml /etc/prometheus/prom.yml
+# Remove default config and replace with ours
+RUN rm -f /etc/prometheus/prometheus.yml
 COPY prom.yml /etc/prometheus/prometheus.yml
 
 # Command to run Prometheus
