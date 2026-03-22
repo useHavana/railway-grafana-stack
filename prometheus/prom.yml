@@ -12,10 +12,10 @@ scrape_configs:
   #     - targets: ['example_api:9091']
 
   - job_name: 'frontend'
-    scheme: http
+    scheme: https
     metrics_path: /api/metrics
     static_configs:
-      - targets: ['havana-frontend.railway.internal:8080']
+      - targets: ['dashboard.usehavana.com']
 
   #  ? TODO: add your services here
   # - job_name: 'your-job-name'
