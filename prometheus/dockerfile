@@ -2,9 +2,10 @@ ARG VERSION=v3.2.1
 
 FROM prom/prometheus:${VERSION}
 
-# Remove default config and replace with ours
-RUN rm -f /etc/prometheus/prometheus.yml
+# Cache bust: change this value to force rebuild
+ARG CACHEBUST=2
+
+# Replace default config with ours
 COPY prom.yml /etc/prometheus/prometheus.yml
 
-# Command to run Prometheus
-CMD ["--config.file=/etc/prometheus/prom.yml", "--storage.tsdb.path=/prometheus", "--web.enable-remote-write-receiver", "--storage.tsdb.retention.time=30d"]
+CMD ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus", "--web.enable-remote-write-receiver", "--storage.tsdb.retention.time=30d"]
