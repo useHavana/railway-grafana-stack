@@ -51,7 +51,28 @@ services:
       - PROMETHEUS_INTERNAL_URL=http://prometheus:9090
       - TEMPO_INTERNAL_URL=http://tempo:3200
   
-  example_api: 
+  pagerduty-bridge:
+    build:
+      context: ./pagerduty-bridge
+      dockerfile: dockerfile
+    ports:
+      - "8090:8090"
+    environment:
+      - PORT=8090
+      - DEVIN_API_KEY=${DEVIN_API_KEY}
+      - DEVIN_ORG_ID=${DEVIN_ORG_ID}
+      - DEVIN_ONCALL_PLAYBOOK_ID=${DEVIN_ONCALL_PLAYBOOK_ID}
+      - PAGERDUTY_WEBHOOK_SECRET=${PAGERDUTY_WEBHOOK_SECRET}
+      - GRAFANA_WEBHOOK_SECRET=${GRAFANA_WEBHOOK_SECRET}
+
+  blackbox:
+    build:
+      context: ./blackbox
+      dockerfile: dockerfile
+    ports:
+      - "9115:9115"
+
+  example_api:
     build:
       context: ./examples/api
       dockerfile: dockerfile

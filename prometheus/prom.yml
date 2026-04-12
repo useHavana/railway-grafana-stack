@@ -17,11 +17,21 @@ scrape_configs:
     static_configs:
       - targets: ['dashboard.usehavana.com']
 
-  #  ? TODO: add your services here
-  # - job_name: 'your-job-name'
-  #   scheme: https
-  #   static_configs:
-  #     - targets: ['URL_GOES_HERE']
-  #   basic_auth:
-  #     username: HTTP_AUTH_USERNAME_GOES_HERE
-  #     password: HTTP_AUTH_PASSWORD_GOES_HERE
+  - job_name: 'sftpgo'
+    scheme: http
+    static_configs:
+      - targets: ['sftpgo-railway.railway.internal:9090']
+
+  - job_name: 'blackbox-sftp-proxy'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    static_configs:
+      - targets: ['upload.sftp.usehavana.com:22']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox.railway.internal:9115
